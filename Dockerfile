@@ -21,7 +21,7 @@ RUN make install
 FROM alpine:3.5
 RUN apk add --no-cache ca-certificates openssl pcre zlib ffmpeg
 COPY --from=build /usr/local/nginx /usr/local/nginx
-RUN rm -rf /usr/local/nginx/html /usr/local/nginx/conf/*.default
+RUN rm -rf /usr/local/nginx/html/* /usr/local/nginx/conf/*.default
 
 WORKDIR /usr/local/nginx
 # # Add rtmp config wildcard inclusion
@@ -30,6 +30,7 @@ RUN mkdir -p /usr/local/nginx/strm.d
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 
 COPY default.conf /usr/local/nginx/strm.d/default.conf
+COPY crossdomain.xml /usr/local/nginx/html/crossdomain.xml
 
 VOLUME ["/usr/local/nginx/logs"]
 
